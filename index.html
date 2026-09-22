@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spanning tree board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Spanning tree board</h1>
+    <p>Draw a weighted graph by hand. The server finds the cheapest set of edges that connects every node.</p>
+  </header>
+
+  <main class="layout">
+    <section class="board-wrap" id="boardWrap" data-mode="node">
+      <svg id="board" role="img" aria-label="Drawing board for the graph"></svg>
+      <input id="weightEditor" class="weight-editor" type="number" step="any" inputmode="decimal"
+             aria-label="Edge weight" hidden>
+      <p class="empty" id="emptyMessage">Click anywhere to place your first node, or load the example graph.</p>
+      <p class="hint" id="hint"></p>
+    </section>
+
+    <aside class="panel" aria-label="Controls">
+      <section>
+        <h2>Draw</h2>
+        <div class="tool-row" role="group" aria-label="Drawing tool">
+          <button type="button" data-mode="node" aria-pressed="true">Add node</button>
+          <button type="button" data-mode="edge" aria-pressed="false">Add edge</button>
+          <button type="button" data-mode="move" aria-pressed="false">Move</button>
+          <button type="button" data-mode="erase" aria-pressed="false">Erase</button>
+        </div>
+        <p class="small" id="counts">0 nodes, 0 edges</p>
+        <p class="small">Shortcuts: N, E, M, X. Click an edge's weight to change it.</p>
+        <div class="button-row">
+          <button type="button" id="exampleBtn">Load example</button>
+          <button type="button" id="clearBtn">Clear board</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Solve</h2>
+        <div class="tool-row two" role="group" aria-label="Algorithm">
+          <button type="button" data-algo="kruskal" aria-pressed="true">Kruskal</button>
+          <button type="button" data-algo="prim" aria-pressed="false">Prim</button>
+        </div>
+        <label class="field" id="startRow" hidden>
+          <span>Start from</span>
+          <select id="startSelect"></select>
+        </label>
+        <button type="button" id="runBtn" class="primary" disabled>Find minimum spanning tree</button>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section id="resultSection" hidden>
+        <h2>Result</h2>
+        <p class="total">Total weight <strong id="total"></strong></p>
+        <p class="small" id="resultNote"></p>
+        <div class="scrub">
+          <label for="scrubber" id="scrubLabel">Step 0 of 0</label>
+          <input type="range" id="scrubber" min="0" max="0" value="0">
+          <button type="button" id="playBtn">Play steps</button>
+        </div>
+        <ol class="steps" id="stepList"></ol>
+      </section>
+
+      <section>
+        <h2>Saved graphs</h2>
+        <form class="save-row" id="saveForm">
+          <label class="sr-only" for="saveName">Graph name</label>
+          <input type="text" id="saveName" maxlength="60" placeholder="Name this graph">
+          <button type="submit">Save</button>
+        </form>
+        <ul class="saved" id="savedList"></ul>
+        <p class="small" id="savedEmpty" hidden>Nothing saved yet.</p>
+      </section>
+    </aside>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
